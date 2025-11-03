@@ -31,7 +31,7 @@ jobs:
 
       - name: Goodbye user
         run: "echo $greating3 $greating2"
-  
-
+      - name: hemlisar
+        run: "echo ${{ secrets.HEMLIGHET }}"
     
     
