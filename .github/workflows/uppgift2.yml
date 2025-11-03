@@ -33,4 +33,4 @@ jobs:
           echo "message2: $message2"
           echo "$message1 $message2"
 
-          echo "I'm $github_actor, from $github_ref"
+          echo "I'm $GITHUB_ACTOR, from $GITHUB_REF"
