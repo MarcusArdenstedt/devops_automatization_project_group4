@@ -35,7 +35,7 @@ jobs:
         run: echo "passed ✅"
 
       - name: Failed
-        if: ${{ failed() }}
+        if: ${{ failure() }}
         run: echo "Failed ❌"
 
       - name: requirements install
@@ -48,7 +48,7 @@ jobs:
         run: echo "Passed ✅"
 
       - name: failed
-        if: ${{ failed() }}
+        if: ${{ failure() }}
         run: echo "Failed ❌"
 
   unit-test:
@@ -76,7 +76,7 @@ jobs:
         run: echo "Passed ✅"
 
       - name: Failed
-        if: ${{ failed() }}
+        if: ${{ failure() }}
         run: echo "Failed ❌"
 
 
@@ -104,7 +104,7 @@ jobs:
         run: echo "Passed ✅"
 
       - name: failed
-        if: ${{ failed() }}
+        if: ${{ failure() }}
         run: echo "Failed ❌"
 
           
