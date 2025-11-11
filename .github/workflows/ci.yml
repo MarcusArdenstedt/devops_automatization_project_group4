@@ -52,7 +52,7 @@ jobs:
 
   unit-test:
     needs: setup
-    name: setup uses
+    name: unit-test
     runs-on: ubuntu-latest
 
     steps:
@@ -80,7 +80,7 @@ jobs:
 
   integrations-test:
     needs: [setup, unit-test]
-    name: setup all uses
+    name: integrations-test
     runs-on: ubuntu-latest
 
     steps:
