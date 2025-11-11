@@ -3,6 +3,8 @@ name: create branch
 on: 
   pull_request:
     branches: [main]
+  push: 
+    branches: [features]
       
 
 jobs:
