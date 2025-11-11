@@ -1,9 +1,9 @@
 name: ci
 on:
   pull_request:
-    branches: [main]
+    branches: ['main']
   push:
-    branches: [ci/setup]
+    branches: ['ci/setup']
 
   workflow_dispatch:
     inputs:
@@ -20,12 +20,12 @@ jobs:
       - name: Check out repository
         # Checkar repository till mappen $GITHUB_WORKSPACE, så att workflow kan kommma åt koden.
         # Explanation: it bring my repot and added on this machin, so the rest of workflow can see it.
-        uses: actions/checkout@v5
+        uses: actions/checkout@v4
 
       - name: Install python
-        uses: actions/setup-python@v6
+        uses: actions/setup-python@v5
         with:
-          python-version: 3.13
+          python-version: '3.13'
 
       - name: check python
         run: python --version
@@ -45,11 +45,11 @@ jobs:
 
       - name: Passed
         if: ${{ success() }}
-          echo "Passed ✅"
+        run: echo "Passed ✅"
 
       - name: failed
         if: ${{ failed() }}
-          echo "Failed ❌"
+        run: echo "Failed ❌"
 
   unit-test:
     needs: setup
@@ -57,14 +57,14 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
         with:
-          python-version: 3.13
+          python-version: '3.13'
 
       - name: ínstall requirements
         run: |
-          python -m pip install --uppgrade pip
+          python -m pip install --upgrade pip
           pip install -r requirements.txt
 
       - name: unit test
@@ -73,11 +73,11 @@ jobs:
 
       - name: Passed
         if: ${{ success() }}
-          echo "Passed ✅"
+        run: echo "Passed ✅"
 
       - name: Failed
         if: ${{ failed() }}
-          echo "Failed ❌"
+        run: echo "Failed ❌"
 
 
   integrations-test:
@@ -86,10 +86,10 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v5
-      - uses: actions/setup-python@v6
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
         with:
-          python-version: 3.13
+          python-version: '3.13'
 
       - name: installing requirements
         run: |
@@ -101,11 +101,11 @@ jobs:
 
       - name: passed
         if: ${{ success() }}
-          echo "Passed ✅"
+        run: echo "Passed ✅"
 
       - name: failed
         if: ${{ failed() }}
-          echo "Failed ❌"
+        run: echo "Failed ❌"
 
           
 
