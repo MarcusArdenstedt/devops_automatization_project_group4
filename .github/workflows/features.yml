@@ -2,7 +2,7 @@ name: create branch
 
 on: 
   push: 
-    branches: [features]
+    branches: [main]
       
 
 jobs:
