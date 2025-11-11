@@ -3,12 +3,10 @@ name: create branch
 on: 
   pull_request:
     branches: [main]
-  push:
-    branches: [main]
       
 
 jobs:
-  creat:
+  create:
     runs-on: ubuntu-latest
 
     steps:
