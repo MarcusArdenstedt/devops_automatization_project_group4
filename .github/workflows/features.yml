@@ -1,0 +1,20 @@
+name: create branch
+
+on: 
+  pull_request:
+    branches: [main]
+      
+
+jobs:
+  creat:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: printout
+        run: |
+          echo "# Creating new branch"
+          echo "checking that's everthing is okej"
+          
+    
