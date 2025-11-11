@@ -53,7 +53,7 @@ jobs:
 
   unit-test:
     needs: setup
-    name: setup uses
+    name: unit-test
     runs-on: ubuntu-latest
 
     steps:
@@ -68,7 +68,7 @@ jobs:
           pip install -r requirements.txt
 
       - name: unit test
-        run: pytest -q weather_app/test_enhet
+        run: pytest -q weather_app/test_enhet.py
        
 
       - name: Passed
@@ -82,7 +82,7 @@ jobs:
 
   integrations-test:
     needs: [setup, unit-test]
-    name: setup all uses
+    name: integration-test
     runs-on: ubuntu-latest
 
     steps:
@@ -97,7 +97,7 @@ jobs:
           pip install -r requirements.txt
 
       - name: integration test
-        run: pytest -q weather_app/test_integration
+        run: pytest -q weather_app/test_integration.py
 
       - name: passed
         if: ${{ success() }}
