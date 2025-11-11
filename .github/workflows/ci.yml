@@ -1,0 +1,105 @@
+name: ci
+on:
+  pull_request:
+    branches: ['main']
+  push:
+    branches: ['ci/setup']
+
+  workflow_dispatch:
+    inputs:
+      name:
+        description: "Setup for my branch"
+        required: true
+        type: string
+
+jobs:
+  setup:
+    # virtual machin linux
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        # Checkar repository till mappen $GITHUB_WORKSPACE, så att workflow kan kommma åt koden.
+        # Explanation: it bring my repot and added on this machin, so the rest of workflow can see it.
+        uses: actions/checkout@v4
+
+      - name: Install python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+
+      - name: check python
+        run: python --version
+
+      - name: Passed
+        if: ${{ success() }}
+        run: echo "passed ✅"
+
+      - name: Failed
+        if: ${{ failure() }}
+        run: echo "Failed ❌"
+
+      - name: requirements install
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+      - name: Passed
+        if: ${{ success() }}
+        run: echo "Passed ✅"
+
+      - name: failed
+        if: ${{ failure() }}
+        run: echo "Failed ❌"
+
+  unit-test:
+    needs: setup
+    name: setup uses
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+
+      - name: ínstall requirements
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+      - name: unit test
+        run: pytest -q weather_app/test_enhet.py
+       
+
+      - name: Passed
+        if: ${{ success() }}
+        run: echo "Passed ✅"
+
+      - name: Failed
+        if: ${{ failure() }}
+        run: echo "Failed ❌"
+
+
+  integrations-test:
+    needs: [setup, unit-test]
+    name: setup all uses
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+
+      - name: installing requirements
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+      - name: integration test
+        run: pytest -q weather_app/test_integration.py
+
+      - name: passed
+        if: ${{ success() }}
+        run: echo "Passed ✅"
+
+      - name: failed
+        if: ${{ failure() }}
+        run: echo "Failed ❌"
