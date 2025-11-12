@@ -87,7 +87,7 @@ jobs:
 
   integrations-test:
     #  when inputs is integrations or all it will run, if all is choosen and setp fails it will still run because function always()
-    if: ${{ always() && github.events.inputs.jobs == 'integrations' ||  github.event.inputs.jobs == 'all'  }}
+    if: ${{ always() && github.event.inputs.jobs == 'integrations' ||  github.event.inputs.jobs == 'all'  }}
     needs: [setup, unit-test]
     name: integrations-test
     runs-on: ubuntu-latest
