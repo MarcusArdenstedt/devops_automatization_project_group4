@@ -9,7 +9,9 @@ on:
         description: "Setup for my branch"
         required: true
         type: string
-
+env:
+  passed: Passed ✅
+  failed: Failed ❌
 jobs:
   setup:
     # virtual machin linux
@@ -30,11 +32,11 @@ jobs:
 
       - name: Passed
         if: ${{ success() }}
-        run: echo "passed ✅"
+        run: echo "$passed"
 
       - name: Failed
         if: ${{ failure() }}
-        run: echo "Failed ❌"
+        run: echo "$failed"
 
       - name: requirements install
         run: |
@@ -42,11 +44,11 @@ jobs:
           pip install -r requirements.txt
       - name: Passed
         if: ${{ success() }}
-        run: echo "Passed ✅"
+        run: echo "$passed
 
       - name: failed
         if: ${{ failure() }}
-        run: echo "Failed ❌"
+        run: echo "$failed"
 
   unit-test:
     needs: setup
@@ -69,11 +71,11 @@ jobs:
 
       - name: Passed
         if: ${{ success() }}
-        run: echo "Passed ✅"
+        run: echo "$passed"
 
       - name: Failed
         if: ${{ failure() }}
-        run: echo "Failed ❌"
+        run: echo "$failed"
 
 
   integrations-test:
@@ -96,8 +98,8 @@ jobs:
 
       - name: passed
         if: ${{ success() }}
-        run: echo "Passed ✅"
+        run: echo "$passed"
 
       - name: failed
         if: ${{ failure() }}
-        run: echo "Failed ❌"
+        run: echo "$failed"
