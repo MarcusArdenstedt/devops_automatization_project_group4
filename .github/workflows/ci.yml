@@ -44,7 +44,7 @@ jobs:
           pip install -r requirements.txt
       - name: Passed
         if: ${{ success() }}
-        run: echo "$passed
+        run: echo "$passed"
 
       - name: failed
         if: ${{ failure() }}
