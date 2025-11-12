@@ -18,7 +18,7 @@ env:
 jobs:
   setup:
     # when the inputs varaible is setup or all it will run
-    if: ${{ github.event.inputs.jobs == 'setup' || github.event.inputs.jobs == 'all'
+    if: ${{ github.event.inputs.jobs == 'setup' || github.event.inputs.jobs == 'all' }}
     # virtual machin linux
     runs-on: ubuntu-latest
     steps:
@@ -57,7 +57,7 @@ jobs:
 
   unit-test:
    #  when inputs is unit or all it will run, if all is choosen and setp fails it will still run because function always()
-    if: ${{ always() && github.event.inputs.jobs == 'unit' || github.event.inputs.jobs == 'all'
+    if: ${{ always() && github.event.inputs.jobs == 'unit' || github.event.inputs.jobs == 'all' }}
     needs: setup
     name: unit-test
     runs-on: ubuntu-latest
