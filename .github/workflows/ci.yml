@@ -85,7 +85,7 @@ jobs:
 
 
   integrations-test:
-    if: ${{ github.events.inputs.run_test == 'integration' ||  github.events.inputs.run_test == 'all'  }}
+    if: ${{ github.events.inputs.run_test == 'integrations' ||  github.events.inputs.run_test == 'all'  }}
     needs: [setup]
     name: integrations-test
     runs-on: ubuntu-latest
