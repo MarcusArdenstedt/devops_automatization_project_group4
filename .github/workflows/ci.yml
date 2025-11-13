@@ -69,7 +69,7 @@ jobs:
         run: pytest -q weather_app/test_enhet.py
           
       - name: unit test without input to txt file
-        if: ${{ failure() }} && ${{ github.event.inputs.show_log == 'false' }} || ${{ success() }}
+        if: ${{ failure() }} && github.event.inputs.show_log == 'false' }} || ${{ success() }}
         run: |
           if [ "${{ success() }}" ]; then
             echo "$passed"
