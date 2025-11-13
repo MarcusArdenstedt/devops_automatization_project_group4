@@ -65,31 +65,24 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r requirements.txt
 
-      - name: run pytest
+      - name: unit test without log
+        if: ${{ github.event.inputs.show_log == 'false' }}
         run: pytest -q weather_app/test_enhet.py
-          
-      - name: unit test without input to txt file
-        if: ${{ failure() }} && github.event.inputs.show_log == 'false' }} || ${{ success() }}
-        run: |
-          if [ "${{ success() }}" ]; then
-            echo "$passed"
-          else
-            echo "$failure"
               
-        
-      #- name: Passed
-        #if: ${{ success() }}
-        #run: echo "$passed"
+      - name: Passed
+        if: ${{ success() }}
+        run: echo "$passed"
 
-      #- name: Failed
-        #if: ${{ failure() }}
-        #run: echo "$failed"
+      - name: Failed
+        if: ${{ failure() }}
+        run: echo "$failed"
         
       - name: unitest and input to txt file
-        if: ${{ failure() }} && ${{ github.event.inputs.show_log == 'true' }}
+        if: ${{ github.event.inputs.show_log == 'true' }}
         shell: bash
         run: |
-          pytest -q > unit-test-log.txt
+          pytest -q weather_app/test_enhet.py > unit-test-log.txt
+          
       - name: uplaod unitest to artifacts
         uses: actions/upload-artifact@v4
         with:
