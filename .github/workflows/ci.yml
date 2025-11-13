@@ -70,14 +70,20 @@ jobs:
           
       - name: unit test without input to txt file
         if: ${{ failure() }} && ${{ github.event.inputs.show_log == 'false' }} || ${{ success() }}
+        run: |
+          if [ "${{ success() }}" ]; then
+            echo "$passed"
+          else
+            echo "$failure"
+              
         
-      - name: Passed
-        if: ${{ success() }}
-        run: echo "$passed"
+      #- name: Passed
+        #if: ${{ success() }}
+        #run: echo "$passed"
 
-      - name: Failed
-        if: ${{ failure() }}
-        run: echo "$failed"
+      #- name: Failed
+        #if: ${{ failure() }}
+        #run: echo "$failed"
         
       - name: unitest and input to txt file
         if: ${{ failure() }} && ${{ github.event.inputs.show_log == 'true' }}
