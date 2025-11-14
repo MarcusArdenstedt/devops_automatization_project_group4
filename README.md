@@ -10,7 +10,7 @@ This project focus on creating a workflow in github action. There are sevral job
 - Create unit test and integration test.
 - create a repository i dockerhub
 - create tokens in dockerhub
-- create two secrets in githhub, one for username and one for passwrd
+- create two secrets in githhub, one for username and one for password. Value for this secrtest you get from dockerhub tokens.
 - Create workflow with jobs that do differents task
 - Use inputs with choice true or false under workflow_dispatch.
 - Added a if-sats on the two jobs with testing
