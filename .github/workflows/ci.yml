@@ -43,11 +43,11 @@ jobs:
           pip install -r requirements.txt
       - name: Passed
         if: ${{ success() }}
-        run: echo "$passed"
+        run: echo "install  $passed"
 
       - name: failed
         if: ${{ failure() }}
-        run: echo "$failed"
+        run: echo "install $failed"
 
   unit-test:
     needs: setup
@@ -70,26 +70,26 @@ jobs:
         run: pytest -q weather_app/test_enhet.py
                      
         
-      - name: unitest and input to txt file
+      - name: uni test with log in artifact
         if: ${{ github.event.inputs.show_log == 'true' }}
         shell: bash
         run: |
           pytest -q weather_app/test_enhet.py > unit-test-log.txt
           
-      - name: upload unitest to artifacts
+      - name: upload unitest in artifacts
         if: ${{ failure() && github.event.inputs.show_log == 'true' }}
         uses: actions/upload-artifact@v4
         with:
-          name: unitest-log 
+          name: unit-test-log 
           path: unit-test-log.txt
           
       - name: Passed
         if: ${{ success() }}
-        run: echo "$passed"
+        run: echo "unit test $passed"
 
       - name: Failed
         if: ${{ failure() }}
-        run: echo "$failed"
+        run: echo "unit test $failed"
             
   integrations-test:
     needs: [setup, unit-test]
@@ -106,13 +106,27 @@ jobs:
         run: |
           python -m pip install --upgrade pip
           pip install -r requirements.txt
-      - name: integration test
+      - name: integration test without log in artifact
+        if: ${{ github.event.inputs.show_log == 'false'
         run: pytest -q weather_app/test_integration.py
 
+      - name: integration test with log in artifact
+        if: ${{ github.event.inputs.show_log == 'true' }}
+        shell: bash
+        run: |
+          pytest -q waether_app/test_integration.py > integration-test-log.txt
+
+      - name: upload integration test in artifact
+        if: ${{ failure() && github.event.inputs.show_log == 'true' }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: integration-test-log
+          path: integration-test-log.txt
+          
       - name: passed
         if: ${{ success() }}
-        run: echo "$passed"
+        run: echo "integration test $passed"
 
       - name: failed
         if: ${{ failure() }}
-        run: echo "$failed"
+        run: echo "integration test $failed"
