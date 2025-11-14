@@ -11,10 +11,12 @@ def test_length():
                 "validTime": f"2025-11-10T{i:02d}:00:00Z",
                 "parameters": [{"name": "t", "values": [i]}]
             }
-            for i in range(24)
+            for i in range(17)
         ]
     }
 
+    # mockar bort externa data och matar funktioinen med kontrollerad testdata. create_dict testas i isolerad miljö utan att göra
+    # riktigt API-request.
     with patch("extract_data.get_weather_data", return_value=fake_data):
         
         df = create_dict("stockholm")
