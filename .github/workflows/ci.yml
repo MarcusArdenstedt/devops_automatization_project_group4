@@ -1,16 +1,20 @@
-name: ci
+name: dev
 on:
+  #push:
+    #branches: [main]
   workflow_dispatch:
     inputs:
       show_log:
-        description: "If you want to see the log"
-        type: choice
+        description: "show log, true upload to artifact, false run without upload to artifact"
+        type: choice 
         options: ["true", "false"]
         default: "false"
                
+
 env:
   passed: Passed ✅
   failed: Failed ❌
+  repot: marcusardenstedt/weather-app
 jobs:
   setup:
     # virtual machin linux
@@ -70,11 +74,10 @@ jobs:
         run: pytest -q weather_app/test_enhet.py
                      
         
-      - name: uni test with log in artifact
+      - name: unit test with log in artifact
         if: ${{ github.event.inputs.show_log == 'true' }}
         shell: bash
-        run: |
-          pytest -q weather_app/test_enhet.py > unit-test-log.txt
+        run: pytest -q weather_app/test_enhet.py > unit-test-log.txt
           
       - name: upload unitest in artifacts
         if: ${{ failure() && github.event.inputs.show_log == 'true' }}
@@ -113,8 +116,7 @@ jobs:
       - name: integration test with log in artifact
         if: ${{ github.event.inputs.show_log == 'true' }}
         shell: bash
-        run: |
-          pytest -q waether_app/test_integration.py > integration-test-log.txt
+        run: pytest -q waether_app/test_integration.py > integration-test-log.txt
 
       - name: upload integration test in artifact
         if: ${{ failure() && github.event.inputs.show_log == 'true' }}
@@ -130,3 +132,30 @@ jobs:
       - name: failed
         if: ${{ failure() }}
         run: echo "integration test $failed"
+
+
+  build-and-push:
+    needs: [setup, unit-test, integrations-test]
+    runs-on: ubuntu-latest
+    steps:
+      - name: check out repository
+        uses: actions/checkout@v4
+        
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Login to Docker
+        uses: docker/login-action@v3.6.0
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME_WEATHER }}
+          password: ${{ secrets.DOCKERHUB_PASSWORD_WEATHER }}
+
+      - name: Build and push to Dockerhub
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          file: ./dockerfile
+          push: true
+          tags: |
+            ${{ env.repot }}:latest
+            ${{ env.repot }}:${{ GITHUB.RUN_NUMBER }}
