@@ -22,7 +22,7 @@ def test_degree_stockholm(stad_input):
         for x in time["parameters"]:
             
             if x["name"] == "t":
-                assert x["unit"] == "Cels"
+                assert x["unit"] == "Cel"
                 assert isinstance(x["values"][0], float)
                
 
