@@ -116,7 +116,7 @@ jobs:
       - name: integration test with log in artifact
         if: ${{ github.event.inputs.show_log == 'true' }}
         shell: bash
-        run: pytest -q waether_app/test_integration.py > integration-test-log.txt
+        run: pytest -q weather_app/test_integration.py > integration-test-log.txt
 
       - name: upload integration test in artifact
         if: ${{ failure() && github.event.inputs.show_log == 'true' }}
