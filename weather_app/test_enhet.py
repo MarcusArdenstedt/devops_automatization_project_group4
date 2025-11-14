@@ -11,7 +11,7 @@ def test_length():
                 "validTime": f"2025-11-10T{i:02d}:00:00Z",
                 "parameters": [{"name": "t", "values": [i]}]
             }
-            for i in range(17)
+            for i in range(24)
         ]
     }
 
