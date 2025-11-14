@@ -14,5 +14,5 @@ This project focus on creating a workflow in github action. There are sevral job
 - Create workflow with jobs that do differents task. one for unit testing, one for integration testing and one that build and push image to dockerhub repository.
 - Use inputs with choice true or false under workflow_dispatch.
 - Added a if-sats on the two jobs with testing
-- When the if-sats is true and the test failed the output of that data should upload i a artifact. 
+- When the if-sats is true and the test failed the output of that data should upload in a artifact. 
 
