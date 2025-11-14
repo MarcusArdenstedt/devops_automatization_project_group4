@@ -107,7 +107,7 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r requirements.txt
       - name: integration test without log in artifact
-        if: ${{ github.event.inputs.show_log == 'false'
+        if: ${{ github.event.inputs.show_log == 'false' }}
         run: pytest -q weather_app/test_integration.py
 
       - name: integration test with log in artifact
